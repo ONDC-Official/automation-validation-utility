@@ -1,0 +1,32 @@
+{
+  "name": "express-ts-app",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "postbuild": "copyfiles -u 1 \"src/**/*.yaml\" \"config/**/*.yaml\" dist/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^14.0.2",
+    "express": "^5.1.0",
+    "js-yaml": "^4.1.0",
+    "jsonpath": "^1.1.1",
+    "ondc-code-generator": "^0.3.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/jsonpath": "^0.2.4",
+    "@types/node": "^24.0.3",
+    "copyfiles": "^2.4.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
