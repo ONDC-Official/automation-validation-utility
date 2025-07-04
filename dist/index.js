@@ -1,5 +1,6 @@
 import express from "express";
 import { evalConfig } from "./compiler.js";
+import { generateRandomFiveDigit } from "./copy-util.js";
 const app = express();
 const PORT = 3000;
 app.use(express.json()); // Enable JSON body parsing
@@ -20,7 +21,7 @@ app.post("/validate", async (req, res) => {
         return;
     }
     try {
-        const result = await evalConfig(validations, payload); // Pass validations to your function (if it supports it)
+        const result = await evalConfig(validations, payload, generateRandomFiveDigit()); // Pass validations to your function (if it supports it)
         res.json({ success: true, result });
     }
     catch (error) {

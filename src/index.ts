@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { evalConfig } from "./compiler.js";
+import { generateRandomFiveDigit } from "./copy-util.js";
 
 const app = express();
 const PORT = 3000;
@@ -27,7 +28,11 @@ app.post("/validate", async (req: Request, res: Response) => {
   }
 
   try {
-    const result = await evalConfig(validations, payload); // Pass validations to your function (if it supports it)
+    const result = await evalConfig(
+      validations,
+      payload,
+      generateRandomFiveDigit()
+    ); // Pass validations to your function (if it supports it)
     res.json({ success: true, result });
   } catch (error) {
     console.error("Validation failed:", error);

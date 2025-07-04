@@ -1,3 +1,4 @@
+import { log } from "console";
 import fs from "fs/promises";
 import path from "path";
 
@@ -18,4 +19,8 @@ export async function copyFolder(src: string, dest: string): Promise<void> {
       await fs.copyFile(srcPath, destPath); // copy file
     }
   }
+}
+
+export function generateRandomFiveDigit() {
+  return String(Math.floor(10000 + Math.random() * 90000));
 }

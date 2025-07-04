@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // import { SupportedLanguages } from "ondc-code-generator/dist/types/compiler-types.js";
 
-export async function evalConfig(x_validations: any, payload: any) {
+export async function evalConfig(x_validations: any, payload: any, id: string) {
   try {
     const comp = new ConfigCompiler(SupportedLanguages.Typescript);
     // const buildString = "build.yaml";
@@ -26,7 +26,8 @@ export async function evalConfig(x_validations: any, payload: any) {
       _SESSION_DATA_: {},
     };
     //   x_validations = buildParsed["x-validations"] as any;
-    await comp.generateCode(dummyConfig, "L1-validations", true);
+    const randomPath = `./${id}/`;
+    await comp.generateCode(dummyConfig, "L1-validations", true, randomPath);
     // pass the validations object and the name of the function of the generated code
 
     const finalOutput = createSandboxDir(payload);
