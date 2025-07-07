@@ -1,0 +1,10 @@
+
+
+import { performL1validations } from "./L1-validations";
+import fs from "fs";
+import path from "path";
+let result  = performL1validations("search", {"context":{"action":"init","bap_id":"example-bap.com","bap_uri":"https://example-bap.com/prod/trv10","bpp_id":"example-bpp.com","bpp_uri":"https://example-bpp.com/prod/seller","location":{"city":{"code":"std:080"},"country":{"code":"IND"}},"message_id":"8926b747-0362-4fcc-b795-0994a6287700","timestamp":"2023-03-23T04:48:53Z","transaction_id":"870782be-6757-43f1-945c-8eeaf9536259","ttl":"PT30S","version":"2.1.0"},"message":{"order":{"billing":{"name":"Joe Adams"},"fulfillments":[{"customer":{"contact":{"phone":"9876556789"},"person":{"name":"Joe Adams"}},"id":"F1","stops":[{"location":{"gps":"13.008935, 77.644408"},"type":"START"},{"location":{"gps":"12.971186, 77.586812"},"type":"END"}],"vehicle":{"category":"AUTO_RICKSHAW","variant":"AUTO_RICKSHAW"}}],"items":[{"id":"I1"}],"payments":[{"collected_by":"BPP","status":"NOT-PAID","type":"ON-FULFILLMENT"}],"provider":{"id":"P1"},"tags":[{"descriptor":{"name":"BAP Terms of Engagement","code":"BAP_TERMS"},"display":false,"list":[{"descriptor":{"code":"BUYER_FINDER_FEES_PERCENTAGE"},"value":"1"},{"descriptor":{"code":"SETTLEMENT_WINDOW"},"value":"PT1D"},{"descriptor":{"code":"SETTLEMENT_BASIS"},"value":"DELIVERY"},{"descriptor":{"code":"SETTLEMENT_TYPE"},"value":"UPI"},{"descriptor":{"code":"SETTLEMENT_AMOUNT"},"value":"1.46"},{"descriptor":{"code":"MANDATORY_ARBITRATION"},"value":"true"},{"descriptor":{"code":"COURT_JURISDICTION"},"value":"New Delhi"},{"descriptor":{"code":"DELAY_INTEREST"},"value":"5"},{"descriptor":{"code":"STATIC_TERMS"},"value":"https://example-test-bap.com/static-terms.txt"},{"descriptor":{"code":"SETTLEMENT_BANK_CODE"},"value":"XXXXXXXX"},{"descriptor":{"code":"SETTLEMENT_BANK_ACCOUNT_NUMBER"},"value":"xxxxxxxxxxxxxx"},{"descriptor":{"code":"SETTLEMENT_VIRTUAL_PAYMENT_ADDRESS"},"value":"9988199772@okicic"}]}]}}});
+fs.writeFileSync(path.resolve(__dirname, "./output.json"), JSON.stringify(result, null, 2));
+
+
+

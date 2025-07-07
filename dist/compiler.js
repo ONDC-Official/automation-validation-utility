@@ -1,7 +1,7 @@
 import { fileURLToPath } from "url";
 import { ConfigCompiler } from "../node_modules/ondc-code-generator/dist/index.js";
 import { SupportedLanguages } from "../node_modules/ondc-code-generator/dist/types/compiler-types.js";
-import fs from "fs";
+import fs, { rmSync } from "fs";
 import path from "path";
 import { loadAndDereferenceYaml } from "./yaml-util.js";
 import { createSandboxDir } from "./sandbox.js";
@@ -24,10 +24,19 @@ export async function evalConfig(x_validations, payload, id) {
             _SESSION_DATA_: {},
         };
         //   x_validations = buildParsed["x-validations"] as any;
-        const randomPath = `./${id}/`;
+        const randomPath = `./processing/${id}/`;
         await comp.generateCode(dummyConfig, "L1-validations", true, randomPath);
         // pass the validations object and the name of the function of the generated code
-        const finalOutput = createSandboxDir(payload);
+        const finalOutput = await createSandboxDir(payload, id);
+        try {
+            rmSync(path.resolve(__dirname, `../processing/${id}`), {
+                recursive: true,
+                force: true,
+            });
+        }
+        catch (e) {
+            console.error("Error removing directory:", e);
+        }
         return finalOutput;
     }
     catch (error) {

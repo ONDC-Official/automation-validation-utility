@@ -5,9 +5,9 @@ import { fileURLToPath } from "url";
 import { copyFolder } from "./copy-util.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-export async function createSandboxDir(payload) {
-    //   const sandboxDir = fs.mkdtempSync(path.join(os.tmpdir(), "ts-sandbox-"));
-    const sandboxDir = path.resolve(__dirname, "./sandbox");
+export async function createSandboxDir(payload, id) {
+    // const sandboxDir = fs.mkdtempSync(path.join(os.tmpdir(), "ts-sandbox-"));
+    const sandboxDir = path.resolve(__dirname, `../processing/${id}/sandbox`);
     fs.mkdirSync(sandboxDir, { recursive: true });
     console.log(`Sandbox directory created at: ${sandboxDir}`);
     fs.writeFileSync(path.join(sandboxDir, "package.json"), JSON.stringify({
@@ -28,7 +28,7 @@ export async function createSandboxDir(payload) {
             resolveJsonModule: true, // Generate source maps
         },
     }, null, 2));
-    const generateCode = path.resolve(__dirname, "../generated");
+    const generateCode = path.resolve(__dirname, `../processing/${id}/generated`);
     await copyFolder(generateCode, sandboxDir);
     // Entry point to call the function
     const runnerCode = `
@@ -55,21 +55,6 @@ fs.writeFileSync(path.resolve(__dirname, "./output.json"), JSON.stringify(result
     if (fs.existsSync(outputFile)) {
         const output = fs.readFileSync(outputFile, "utf8");
         console.log("Output:", output);
-        // delete session file
-        try {
-            fs.rmSync(sandboxDir, { recursive: true, force: true });
-            console.log(`Sandbox directory ${sandboxDir} deleted successfully.`);
-        }
-        catch (err) {
-            console.error(`Error deleting sandbox directory:`, err);
-        }
-        // const generatedDir = path.resolve(__dirname, "../generated");
-        // try {
-        //   fs.rmSync(generatedDir, { recursive: true, force: true });
-        //   console.log(`Generated directory ${generatedDir} deleted successfully.`);
-        // } catch (err) {
-        //   console.error(`Error deleting generated directory:`, err);
-        // }
         return JSON.parse(output);
     }
     else {
